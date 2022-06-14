@@ -22,6 +22,10 @@ $arTemplateParameters = array(
         "TYPE" => "CHECKBOX",
         "DEFAULT" => "Y",
     ),
+    "ID_IBLOCK_CANONICAL" => Array(
+        "NAME" => GetMessage("ID_IBLOCK_CANONICAL"),
+        "TYPE" => "STRING",
+    ),
 	"USE_SHARE" => Array(
 		"NAME" => GetMessage("T_IBLOCK_DESC_NEWS_USE_SHARE"),
 		"TYPE" => "CHECKBOX",
