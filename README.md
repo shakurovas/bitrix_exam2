@@ -1,1 +1,2 @@
-[bitrixexam2.docx](https://github.com/shakurovas/bitrix_exam2/files/8920725/bitrixexam2.docx)
+https://academy.1c-bitrix.ru/upload/academy-docs/exam_dev/Ex2Demo1.pdf
+https://academy.1c-bitrix.ru/upload/academy-docs/exam_dev/Ex2Demo2.pdf
