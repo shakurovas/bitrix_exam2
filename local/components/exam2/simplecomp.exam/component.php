@@ -155,17 +155,18 @@ if($this->startResultCache(false, array($arNavigation, $cFilter), 'servicesIbloc
             ),
             $arParams['DETAIL_LINK']
         );
-        // $arButtons = CIBlock::GetPanelButtons(
-        //     $arParams['PRODUCTS_IBLOCK_ID'],
-        //     $arProduct['ID'],
-        //     0,
-        //     array("SECTION_BUTTONS" => false, "SESSID" => false),
-        // );
-        // $arProduct['EDIT_LINK'] = $arButtons['edit']['edit_element']['ACTION_URL'];
-        // $arProduct['DELETE_LINK'] = $arButtons['edit']['delete_element']['ACTION_URL'];
+       
+        $arButtons = CIBlock::GetPanelButtons(
+            $arParams['PRODUCTS_IBLOCK_ID'],
+            $arProduct['ID'],
+            0,
+            array("SECTION_BUTTONS" => false, "SESSID" => false),
+        );
+        $arProduct['EDIT_LINK'] = $arButtons['edit']['edit_element']['ACTION_URL'];
+        $arProduct['DELETE_LINK'] = $arButtons['edit']['delete_element']['ACTION_URL'];
 
-        // $arResult['ADD_LINK'] = $arButtons['edit']['add_element']['ACTION_URL'];
-        // $arResult['IBLOCK_ID'] = $arParams['PRODUCTS_IBLOCK_ID'];
+        $arResult['ADD_LINK'] = $arButtons['edit']['add_element']['ACTION_URL'];
+        $arResult['IBLOCK_ID'] = $arParams['PRODUCTS_IBLOCK_ID'];
 
         foreach($arSections[$arProduct["IBLOCK_SECTION_ID"]][$arParams['PRODUCTS_IBLOCK_ID_PROPERTY']] as $newsId){
             if (isset($arNews[$newsId])) {
