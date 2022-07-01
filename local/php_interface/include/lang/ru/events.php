@@ -4,3 +4,4 @@ $MESS['MESS_FOR_AUTHORIZED_USER'] = 'Пользователь авторизов
 $MESS['MESS_FOR_NOT_AUTHORIZED_USER'] = 'Пользователь не авторизован, данные из
 формы: #NAME_FORM#';
 $MESS['CHANGING_DATA_IN_MAIL'] = 'Замена данных в отсылаемом письме';
+$MESS['ERROR_MESSAGE'] = 'Товар невозможно деактивировать, у него #COUNT# просмотров';

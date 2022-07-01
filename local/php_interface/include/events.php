@@ -1,10 +1,53 @@
 <?php
+IncludeModuleLangFile(__FILE__);
 AddEventHandler("main", "OnBeforeEventAdd", array("Ex2", "OnBeforeEventAddHandler"));
 AddEventHandler("main", "OnBuildGlobalMenu", array("Ex2", "OnBuildGlobalMenuHandler"));
+AddEventHandler("iblock", "OnBeforeIBlockElementUpdate", array("Ex2", "OnBeforeIBlockElementUpdateHandler"));
 
 class Ex2
 {
-    function OnBeforeEventAddHandler(&$event, &$lid, &$arFields){
+
+    function OnBeforeIBlockElementUpdateHandler(&$arFields)
+    {
+        if ($arFields['IBLOCK_ID'] == 2) {
+            if ($arFields['ACTIVE'] == 'N') {
+
+                $res = CIBlockElement::GetList(
+                    array(),
+                    array(
+                        "IBLOCK_ID" => 2,
+                        "ID" => $arFields['ID']
+                    ),
+                    false,
+                    false,
+                    array(
+                        "ID",
+                        "IBLOCK_ID",
+                        "NAME",
+                        "SHOW_COUNTER"
+                    )
+                );
+
+                $arItems = $res->Fetch();
+                // global $APPLICATION;
+                // echo '<pre>';
+                // print_r($arItems);
+                // echo '</pre>';
+                // $APPLICATION->throwException('Error');
+                // return false;
+
+                if ($arItems['SHOW_COUNTER'] > 2) {
+                    global $APPLICATION;
+                    $text = GetMessage('ERROR_MESSAGE', array('#COUNT#' => $arItems['SHOW_COUNTER']));
+                    $APPLICATION->throwException($text);
+                    return false;
+                }
+            }
+    }
+}
+
+    function OnBeforeEventAddHandler(&$event, &$lid, &$arFields)
+    {
         if ($event = 'FEEDBACK_FORM') {
             global $USER;
             if ($USER->isAuthorized()) {
@@ -32,7 +75,8 @@ class Ex2
         }
     }
 
-    function OnBuildGlobalMenuHandler(&$aGlobalMenu, &$aModuleMenu){
+    function OnBuildGlobalMenuHandler(&$aGlobalMenu, &$aModuleMenu)
+    {
         $isManager = false;
         $isAdmin = false;
 
