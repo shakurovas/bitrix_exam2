@@ -60,6 +60,7 @@ function CheckUserCount()
 
         $eventSendFields = array(
 			"EVENT_NAME" => "CANJKNJSNJNGS",
+            'MESSAGE_ID' => 34,
 			"C_FIELDS" =>  array(
                 "EMAIL_TO" => $admin['EMAIL'],
                 "COUNT" => $users,

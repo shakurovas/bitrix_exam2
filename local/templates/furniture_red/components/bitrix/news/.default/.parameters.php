@@ -22,9 +22,10 @@ $arTemplateParameters = array(
         "TYPE" => "CHECKBOX",
         "DEFAULT" => "Y",
     ),
-	"CLAIM_ON_NEWS" => Array(
-        "NAME" => GetMessage("CLAIM_ON_NEWS"),
+	"REPORT_AJAX" => Array(
+        "NAME" => GetMessage("REPORT_AJAX"),
         "TYPE" => "CHECKBOX",
+        // "DEFAULT" => "Y",
     ),
     "ID_IBLOCK_CANONICAL" => Array(
         "NAME" => GetMessage("ID_IBLOCK_CANONICAL"),

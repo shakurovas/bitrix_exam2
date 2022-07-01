@@ -6,41 +6,48 @@ AddEventHandler("main", "OnBeforeEventAdd", array("Ex2", "OnBeforeEventAddHandle
 AddEventHandler("main", "OnBuildGlobalMenu", array("Ex2", "OnBuildGlobalMenuHandler"));
 AddEventHandler("main", "OnEpilog", array("Ex2", "OnEpilogHandler"));
 AddEventHandler("main", "OnBeforeProlog", array("Ex2", "OnBeforePrologHandler"));
-AddEventHandler("main", "OnBeforeIBlockElementUpdate", array("Ex2", "OnBeforeIBlockElementUpdateHandler"));
+AddEventHandler("iblock", "OnBeforeIBlockElementUpdate", array("Ex2", "OnBeforeIBlockElementUpdateHandler"));
 
 class Ex2
 {
 
-    function OnBeforeIBlockElementUpdateHandler()
+    function OnBeforeIBlockElementUpdateHandler(&$arFields)
     {
-        echo '<pre>';
-        var_dump($arFields);
-        echo '</pre>';
         if ($arFields['IBLOCK_ID'] == 2) {
-            
             if ($arFields['ACTIVE'] == 'N') {
 
                 $res = CIBlockElement::GetList(
                     array(),
-                    Array("IBLOCK_ID" => 2, "ID" => $arFields['ID']),
+                    array(
+                        "IBLOCK_ID" => 2,
+                        "ID" => $arFields['ID']
+                    ),
                     false,
                     false,
-                    array("ID", "IBLOCK_ID", "NAME", "SHOW_COUNTER")
+                    array(
+                        "ID",
+                        "IBLOCK_ID",
+                        "NAME",
+                        "SHOW_COUNTER"
+                    )
                 );
-                
+
                 $arItems = $res->Fetch();
+                // global $APPLICATION;
+                // echo '<pre>';
+                // print_r($arItems);
+                // echo '</pre>';
+                // $APPLICATION->throwException('Error');
+                // return false;
 
                 if ($arItems['SHOW_COUNTER'] > 2) {
                     global $APPLICATION;
-                    $text = GetMessage('CAN_NOT_DELETE', array('COUNT' => $arItems['SHOW_COUNTER']));
+                    $text = GetMessage('ERROR_MESSAGE', array('#COUNT#' => $arItems['SHOW_COUNTER']));
                     $APPLICATION->throwException($text);
                     return false;
                 }
-
             }
         }
-
-       
     }
 
     function OnBeforeEventAddHandler(&$event, &$lid, &$arFields)
