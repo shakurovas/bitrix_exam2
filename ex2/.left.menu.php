@@ -34,6 +34,27 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Оценка производительности - 10", 
+		"/ex2/time_control/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Оценка производительности - 11", 
+		"/ex2/time_control2/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Оценка производительности - 88", 
+		"/ex2/time_control3/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>

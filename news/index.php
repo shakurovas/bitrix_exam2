@@ -91,6 +91,7 @@ $APPLICATION->SetTitle("Новости");
 		"SHOW_404" => "N",
 		"MESSAGE_404" => "",
 		"ID_IBLOCK_CANONICAL" => "5",
+		"FILE_404" => "",
 		"SEF_URL_TEMPLATES" => array(
 			"news" => "",
 			"section" => "",

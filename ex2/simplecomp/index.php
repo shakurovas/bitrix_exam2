@@ -5,12 +5,13 @@ $APPLICATION->SetTitle("Простой компонент");
 	"exam2:simplecomp.exam", 
 	".default", 
 	array(
-		"PRODUCTS_IBLOCK_ID" => "2",
-		"COMPONENT_TEMPLATE" => ".default",
-		"NEWS_IBLOCK_ID" => "1",
-		"PRODUCTS_IBLOCK_ID_PROPERTY" => "UF_NEWS_LINK",
+		"CACHE_TIME" => "36000000",
 		"CACHE_TYPE" => "A",
-		"CACHE_TIME" => "0"
+		"ELEMENTS_PER_PAGE" => "2",
+		"NEWS_IBLOCK_ID" => "1",
+		"PRODUCTS_IBLOCK_ID" => "2",
+		"PRODUCTS_IBLOCK_ID_PROPERTY" => "UF_NEWS_LINK",
+		"COMPONENT_TEMPLATE" => ".default"
 	),
 	false
 );?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

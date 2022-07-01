@@ -1,10 +1,50 @@
 <?php
+
+IncludeModuleLangFile(__FILE__);
+
 AddEventHandler("main", "OnBeforeEventAdd", array("Ex2", "OnBeforeEventAddHandler"));
 AddEventHandler("main", "OnBuildGlobalMenu", array("Ex2", "OnBuildGlobalMenuHandler"));
+AddEventHandler("main", "OnEpilog", array("Ex2", "OnEpilogHandler"));
+AddEventHandler("main", "OnBeforeProlog", array("Ex2", "OnBeforePrologHandler"));
+AddEventHandler("main", "OnBeforeIBlockElementUpdate", array("Ex2", "OnBeforeIBlockElementUpdateHandler"));
 
 class Ex2
 {
-    function OnBeforeEventAddHandler(&$event, &$lid, &$arFields){
+
+    function OnBeforeIBlockElementUpdateHandler()
+    {
+        echo '<pre>';
+        var_dump($arFields);
+        echo '</pre>';
+        if ($arFields['IBLOCK_ID'] == 2) {
+            
+            if ($arFields['ACTIVE'] == 'N') {
+
+                $res = CIBlockElement::GetList(
+                    array(),
+                    Array("IBLOCK_ID" => 2, "ID" => $arFields['ID']),
+                    false,
+                    false,
+                    array("ID", "IBLOCK_ID", "NAME", "SHOW_COUNTER")
+                );
+                
+                $arItems = $res->Fetch();
+
+                if ($arItems['SHOW_COUNTER'] > 2) {
+                    global $APPLICATION;
+                    $text = GetMessage('CAN_NOT_DELETE', array('COUNT' => $arItems['SHOW_COUNTER']));
+                    $APPLICATION->throwException($text);
+                    return false;
+                }
+
+            }
+        }
+
+       
+    }
+
+    function OnBeforeEventAddHandler(&$event, &$lid, &$arFields)
+    {
         if ($event = 'FEEDBACK_FORM') {
             global $USER;
             if ($USER->isAuthorized()) {
@@ -32,7 +72,8 @@ class Ex2
         }
     }
 
-    function OnBuildGlobalMenuHandler(&$aGlobalMenu, &$aModuleMenu){
+    function OnBuildGlobalMenuHandler(&$aGlobalMenu, &$aModuleMenu)
+    {
         $isManager = false;
         $isAdmin = false;
 
@@ -72,6 +113,56 @@ class Ex2
                 }
             }
             $aGlobalMenu = ["global_menu_content" => $aGlobalMenu["global_menu_content"]];
+        }
+    }
+
+    function OnEpilogHandler()
+    {
+        if (defined("ERROR_404") && ERROR_404 == 'Y') {
+            global $APPLICATION;
+            $APPLICATION->RestartBuffer(); // очищаем ту часть страницы, которая уже загрузилась
+//            CHTTP::SetStatus("404 Not Found");
+            include $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . "/header.php";
+            include $_SERVER['DOCUMENT_ROOT'] . "/404.php"; // для динамических страниц, т. к. для них без написания этой строки будет выводиться лишь "элемент не найден" например
+            include $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . "/footer.php";
+
+            CEventLog::Add(
+                array(
+                    'SEVERITY' => 'INFO',
+                    'AUDUT_TYPE_ID' => 'ERROR_404',
+                    'MODULE_ID' => 'main',
+                    'DESCRIPTION' => $APPLICATION->GetCurPage(),
+                )
+            );
+        }
+    }
+
+    function OnBeforePrologHandler()
+    {
+        global $APPLICATION;
+        $curPage = $APPLICATION->GetCurDir();
+
+        if (\Bitrix\Main\Loader::includeModule('iblock')) {
+            $ob = CIBlockElement::GetList(
+                array(),
+                array(
+                    "IBLOCK_ID" => 6,
+                    "NAME" => $curPage
+                ),
+                false,
+                false,
+                array(
+                    "IBLOCK_ID",
+                    "ID",
+                    'PROPERTY_TITLE',
+                    'PROPERTY_DESCRIPTION',
+                )
+            );
+
+            if ($arRes = $ob->Fetch()) {
+                $APPLICATION->SetPageProperty('title', $arRes['PROPERTY_TITLE_VALUE']);
+                $APPLICATION->SetPageProperty('description', $arRes['PROPERTY_DESCRIPTION_VALUE']);
+            }
         }
     }
 }

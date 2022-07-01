@@ -35,6 +35,39 @@
 			<br />
 	<?endforeach;?>
 	<?foreach($arResult["DISPLAY_PROPERTIES"] as $pid=>$arProperty):?>
+		
+		<? if ($arParams['CLAIM_ON_NEWS'] == 'Y'): ?>
+                <a id="ajax-report" href="#" onclick="return false;">Пожаловаться!</a>
+                <script>
+                    BX.ready(function () {
+                        // Ссылка, выполняющая роль кнопки
+                        var ajaxReportBtn = document.getElementById('ajax-report');
+                        // Вывод результата
+                        var textElem = document.getElementById('ajax-report-text');
+
+                        ajaxReportBtn.onclick = function () {
+                            // Функция загружает json-объект из заданного url и передает его обработчику callback
+                            BX.ajax.loadJSON(
+                                '<?=$APPLICATION->GetCurPage()?>',
+                                {'TYPE': 'CLAIM_ON_NEWS', 'ID': <?=$arResult['ID']?>},
+                                // Обработчик
+                                function (data) {
+                                    textElem.innerText = "Ваше мнение учтено, №" + data['ID'];
+                                },
+                                // Обработчик ошибочной ситуации
+                                function (data) {
+                                    textElem.innerText = "Ошибка Ajax!";
+                                }
+                            );
+                        };
+                    });
+                </script>
+            <? else: ?>
+                <? //<Работа в режиме GET> ?>
+				<a href="<?= $APPLICATION->GetCurPage() ?>?TYPE=REPORT_GET&ID=<?= $arResult['ID'] ?>">Пожаловаться!</a>
+            <? endif; ?>
+                <? //<Вывод строки с результатом> ?>
+                <span id="ajax-report-text"></span>
 
 		<?=$arProperty["NAME"]?>:&nbsp;
 		<?if(is_array($arProperty["DISPLAY_VALUE"])):?>
