@@ -9,7 +9,7 @@ echo GetMessage('FILTER_TITLE') . "<a href='" . $url . "'>" . $url . "</a><br>";
 <?php if (count($arResult['NEWS']) > 0) {?>
     <ul>
         <?php foreach($arResult['NEWS'] as $arNews){?>
-            <?php foreach ($arNews['PRODUCTS'] as $arProduct) {?>
+            <?php //foreach ($arNews['PRODUCTS'] as $arProduct) {?>
                 <li>
                     <b>
                         <?=$arNews['NAME'];?>
@@ -17,7 +17,7 @@ echo GetMessage('FILTER_TITLE') . "<a href='" . $url . "'>" . $url . "</a><br>";
                     - <?=$arNews['ACTIVE_FROM'];?>
                     (<?=implode(', ', $arNews['SECTIONS']);?>)
                 </li>
-            <?}?>
+            <?//}?>
 
             <?if (count($arNews['PRODUCTS']) > 0) {?>
                 <?
@@ -34,7 +34,7 @@ echo GetMessage('FILTER_TITLE') . "<a href='" . $url . "'>" . $url . "</a><br>";
                            <?=$arProduct['PROPERTY_ARTNUMBER_VALUE'];?> -
                            <?=$arProduct['PROPERTY_MATERIAL_VALUE'];?> -
                            <?=$arProduct['PROPERTY_PRICE_VALUE'];?> -
-                           (<?=$arProduct['DETAIL_LINK'] . '.php';?>)
+                           (<?=$arProduct['DETAIL_PAGE_URL'] . '.php';?>)
                         </li>
                     <?}?>
                 </ul>
