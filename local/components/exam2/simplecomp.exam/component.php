@@ -131,6 +131,7 @@ if($this->startResultCache(false, array($arNavigation, $cFilter), 'servicesIbloc
             "NAME",
             "IBLOCK_SECTION_ID",
             "ID",
+            "CODE",
             "IBLOCK_ID",
             "PROPERTY_ARTNUMBER",
             "PROPERTY_MATERIAL",
